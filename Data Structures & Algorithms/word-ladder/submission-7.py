@@ -1,0 +1,41 @@
+class Solution:
+    def ladderLength(self, beginWord: str, endWord: str, wordList: List[str]) -> int:
+
+        adj = defaultdict(list)
+        for word in wordList:
+            for i in range(len(word)):
+                prefix = word[:i] + "*" + word[i + 1:]
+                adj[prefix].append(word)
+
+
+
+
+        queue = deque([])
+        queue.append([beginWord, 1])
+
+        visited = set()
+        while queue:
+
+            word, length = queue.popleft()
+
+            
+            if word == endWord:
+                return length
+
+            
+            for i in range(len(word)):
+
+                prefix = word[:i] + "*" + word[i + 1:]
+
+                for nei in adj[prefix]:
+                    if nei not in visited and nei != word:
+                        visited.add(nei)
+                        queue.append([nei, length + 1])
+            
+        return 0
+                    
+
+
+
+
+
